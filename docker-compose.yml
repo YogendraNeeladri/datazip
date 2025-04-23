@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodb_data:/data/db
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+  metastore-db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: metastore_db
+      POSTGRES_USER: hive
+      POSTGRES_PASSWORD: hive
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  hive-metastore:
+    image: apache/hive:4.0.0-alpha-2
+    ports:
+      - "9083:9083"
+    environment:
+      DB_DRIVER: postgres
+      DB_URL: jdbc:postgresql://metastore-db:5432/metastore_db
+      DB_USER: hive
+      DB_PASS: hive
+      METASTORE_DB_HOSTNAME: metastore-db
+    depends_on:
+      - metastore-db
+
+volumes:
+  mongodb_data:
+  minio_data:
+  postgres_data: 

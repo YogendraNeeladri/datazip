@@ -1,0 +1,5 @@
+pymongo==4.5.0
+pyspark==3.4.1
+olake==0.1.0
+pyiceberg==0.5.1
+boto3==1.28.44 
