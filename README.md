@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MongoDB to Apache Iceberg Data Pipeline
 
 This project demonstrates a data pipeline that extracts data from MongoDB and syncs it to Apache Iceberg using OLake's Hive integration, with querying capabilities via Apache Spark.
@@ -68,3 +69,6 @@ docker-compose up -d
 ```bash
 docker-compose logs -f [service_name]
 ``` 
+=======
+# datazip
+>>>>>>> 20c0721b5eebd98922676a501e9581197c21a72b
